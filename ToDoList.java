@@ -18,26 +18,25 @@ class ToDoList {
             while (number != 4) {
                 System.out.println(text);
 		number = in.nextInt();
-		if (number == 1) {
-                    System.out.println("add thing: ");
-                    name = str.nextLine();
-                    things.add(name);
-		} else {
-                    
-                    if (number == 2) {
-			    if (number == 2) {                            
-                            	printList(things);
-                            }                                        
-                    } else {
-                        if (number == 3) {
-                            System.out.println("Etnter the number of delating thing: ");
-                            number = in.nextInt();
-                            things.remove(number);
-			    number = 0;
-                            printList(things);
-                        }
-                            }
-			}
+		switch(number) {
+			case 1:
+				System.out.println("add thing: ");
+				name = str.nextLine();
+				things.add(name); 
+				break;
+			case 2:
+				printList(things);
+				break;
+			case 3:
+				System.out.println("Etnter the number of delating thing: ");
+				number = in.nextInt();
+				things.remove(number);
+				number = 0;
+				printList(things);
+				break;
+			default:
+				System.out.println("It's not correct number");
+		}
             }
             writeArrayListToFile(file, things);
 	}
