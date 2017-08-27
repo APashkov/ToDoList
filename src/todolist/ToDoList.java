@@ -8,12 +8,8 @@ package todolist;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Formatter;
-import java.util.Iterator;
 import java.io.*;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
 
 /**
  *
@@ -29,10 +25,8 @@ public class ToDoList {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         File file = new File("list.txt");
-        FileInputStream fileInStream = new FileInputStream(file);
-        ObjectInputStream objectInStream = new ObjectInputStream(fileInStream);
-        List<ToDoListItem> todoList = (ArrayList<ToDoListItem>) objectInStream.readObject();
-        objectInStream.close();
+        List<ToDoListItem> todoList = readList(file);
+        //List<ToDoListItem> todoList = new ArrayList<>();
         String text = "Input number (1 - add thing, 2 - show things, 3 - delete thing, 4 - exit): ";
         int number = 0;
         while (number != 4) {
@@ -46,8 +40,8 @@ public class ToDoList {
                     String line = str.nextLine();
                     todoList.add(new ToDoListItem() {
                         {
-                            Text = line;
-                            Complete = false;
+                            text = line;
+                            complete = false;
                         }
                     });
                     break;
@@ -66,20 +60,39 @@ public class ToDoList {
                     System.out.println("It's not correct number");
             }
         }
-        FileOutputStream fileOutStream = new FileOutputStream(file);
-        ObjectOutputStream objectOutStream = new ObjectOutputStream(fileOutStream);
-        objectOutStream.writeObject(todoList);
-        objectOutStream.close();
+        writeList(file, todoList);
     }
-    public static void printList(List<ToDoListItem> todoList) {
-        todoList.forEach((todoItem) -> {
-            System.out.println(todoItem.Text);
-        });
+
+    private static void writeList(File file, List<ToDoListItem> todoList) throws IOException, FileNotFoundException {
+        FileOutputStream fileOutStream = new FileOutputStream(file);
+        try (ObjectOutputStream objectOutStream = new ObjectOutputStream(fileOutStream)) {
+            objectOutStream.writeObject(todoList);
+        }
+    }
+
+    private static List<ToDoListItem> readList(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+        FileInputStream fileInStream = new FileInputStream(file);
+        try (ObjectInputStream objectInStream = new ObjectInputStream(fileInStream)) {
+            return (ArrayList<ToDoListItem>) objectInStream.readObject();
+        }
+    }
+
+    private static void printList(List<ToDoListItem> todoList) {
+        int index = 0;
+        while (index < todoList.size()) {
+            System.out.println(index + " - " + todoList.get(index));
+            index++;
+        }
     }
 }
 
 class ToDoListItem implements Serializable {
 
-    public String Text;
-    public boolean Complete;
+    public String text;
+    public boolean complete;
+    
+    @Override
+    public String toString() {
+        return text;
+    }
 }
