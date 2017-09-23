@@ -70,7 +70,7 @@ public class ToDoList {
         }
     }
 
-    private static List<ToDoListItem> readList(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static List<ToDoListItem> readList(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         if (!file.exists()) {
             return new ArrayList<ToDoListItem>();
         }
