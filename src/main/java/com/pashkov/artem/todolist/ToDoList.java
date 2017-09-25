@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  *
@@ -42,6 +43,7 @@ public class ToDoList {
                         {
                             text = line;
                             complete = false;
+                            id = UUID.randomUUID();
                         }
                     });
                     break;
@@ -93,6 +95,7 @@ class ToDoListItem implements Serializable {
 
     public String text;
     public boolean complete;
+    public UUID id;
     
     @Override
     public String toString() {

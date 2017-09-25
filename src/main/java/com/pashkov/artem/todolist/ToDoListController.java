@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class ToDoListController {
@@ -25,6 +26,7 @@ public class ToDoListController {
             {
                 text = line;
                 complete = false;
+                id = UUID.randomUUID();
             }
         });
         return "The method POST, param - " + line + " list " + todoList;
