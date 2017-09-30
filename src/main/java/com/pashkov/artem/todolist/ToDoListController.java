@@ -16,7 +16,7 @@ public class ToDoListController {
     }
 
     @ResponseBody
-    @RequestMapping("/todolist")
+    @RequestMapping(value = "/todolist", method = {RequestMethod.GET})
     public List home() {
         return todoList;
     }
@@ -29,6 +29,15 @@ public class ToDoListController {
                 id = UUID.randomUUID();
             }
         });
-        return "The method POST, param - " + line + " list " + todoList;
+        return "The method POST, " + todoList;
+    }
+    @RequestMapping(value = "/todolist/{id}", method = {RequestMethod.PUT})
+    public String put(@PathVariable("id") UUID index, @RequestParam("text") String text) {
+        for (ToDoListItem item : todoList) {
+            if (item.id.equals(index)) {
+                item.text = text;
+            }
+        }
+        return "The method PUT, " + todoList;
     }
 }
