@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,4 +41,15 @@ public class ToDoListController {
         }
         return "The method PUT, " + todoList;
     }
+    @RequestMapping(value = "/todolist/{id}", method = {RequestMethod.DELETE})
+    public List<ToDoListItem> delete(@PathVariable("id") UUID index) throws ConcurrentModificationException {
+        todoList.removeIf(object -> object.id.equals(index));
+        /*for (ToDoListItem item : todoList) {
+            if (item.id.equals(index)) {
+                    todoList.remove(item);
+            }
+        }*/
+        return todoList;
+    }
+
 }

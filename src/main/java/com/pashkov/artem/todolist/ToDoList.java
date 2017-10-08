@@ -65,14 +65,14 @@ public class ToDoList {
         writeList(file, todoList);
     }
 
-    private static void writeList(File file, List<ToDoListItem> todoList) throws IOException, FileNotFoundException {
+    private static void writeList(File file, List<ToDoListItem> todoList) throws IOException {
         FileOutputStream fileOutStream = new FileOutputStream(file);
         try (ObjectOutputStream objectOutStream = new ObjectOutputStream(fileOutStream)) {
             objectOutStream.writeObject(todoList);
         }
     }
 
-    public static List<ToDoListItem> readList(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static List<ToDoListItem> readList(File file) throws IOException, ClassNotFoundException {
         if (!file.exists()) {
             return new ArrayList<ToDoListItem>();
         }
